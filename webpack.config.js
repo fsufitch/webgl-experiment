@@ -4,14 +4,6 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var ENV = process.env.ENV;
-var isDeploy = ENV === 'deploy';
-var isProd = (ENV === 'prod') || isDeploy;
-var isDev = (ENV === 'dev') || (!isProd);
-var envText = isDeploy ? 'deploy' : isProd ? 'prod' : 'dev'
-
-console.debug('Resolved build environment: '  + envText);
-
 // Webpack Plugins
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var autoprefixer = require('autoprefixer');
@@ -20,20 +12,16 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = () => {
   var config = {};
 
-  if (isDev) {
-    config.devtool = 'eval-source-map';
-  } else {
-    config.devtool = 'source-map';
-  }
+  config.devtool = 'eval-source-map';
 
   config.entry = {
-    app: './prez-tweet-ui/main.ts',
-    polyfill: './prez-tweet-ui/polyfill.ts',
-    vendor: './prez-tweet-ui/vendor.ts',
+    main: './src/main.ts',
+    polyfill: './src/polyfill.ts',
+    vendor: './src/vendor.ts',
   };
 
   config.output = {
-    path: root('dist', envText),
+    path: root('dist'),
     filename: '[name].bundle.js',
   };
 
@@ -45,7 +33,7 @@ module.exports = () => {
     }],
   };
 
-  var atlConfigFile = root('prez-tweet-ui', 'tsconfig.json');
+  var atlConfigFile = root('src', 'tsconfig.json');
   config.module = {
     rules: [
       {test: require.resolve("jquery"), loaders: ["expose-loader?$", "expose-loader?jQuery"] },
@@ -73,30 +61,30 @@ module.exports = () => {
         ]
       }
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        ENV: JSON.stringify(envText),
-      }
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     ENV: JSON.stringify(envText),
+    //   }
+    // }),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: root('prez-tweet-ui', 'index.html'),
+      template: root('src', 'index.html'),
       chunksSortMode: 'dependency',
     }),
   ];
 
-  if (isProd) {
-    config.plugins.push(
-      new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: { keep_fnames: true }})
-    );
-  }
+  // if (isProd) {
+  //   config.plugins.push(
+  //     new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: { keep_fnames: true }})
+  //   );
+  // }
 
   config.devServer = {
-    contentBase: root('prez-tweet-ui'),
+    contentBase: root('src'),
     historyApiFallback: true,
     quiet: false,
     stats: 'normal', // none (or false), errors-only, minimal, normal (or true) and verbose
-    port: process.env.WEBPACK_DEV_SERVER_PORT || 8888,
+    port: 8889,
   };
 
   return config

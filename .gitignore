@@ -1,3 +1,4 @@
+.awcache/
 bin/
 dist/
 node_modules/

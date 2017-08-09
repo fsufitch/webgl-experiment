@@ -1,0 +1,22 @@
+<div class="page-container">
+  <div class="header">
+    <h1> Three.js Experiment </h1>
+  </div>
+  <div *ngIf="hasWebGLSupport; else noSupport" class="canvas-container">
+    <cube-canvas width=800 height=600> </cube-canvas>
+  </div>
+  <ng-template #noSupport>
+    <p class="webgl-warning">
+      <ng-template *ngIf="!hasBrowserSupport; else browserSupport">
+        Your browser does not seem to support
+        <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a>.
+        Find out how to get it <a href="http://get.webgl.org/">here</a>.
+      </ng-template>
+      <ng-template #browserSupport>
+        Your graphics card does not seem to support
+        <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation">WebGL</a>.
+        Find out how to get it <a href="http://get.webgl.org/">here</a>.
+      </ng-template>
+    </p>
+  </ng-template>
+</div>
