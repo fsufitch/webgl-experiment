@@ -1,0 +1,49 @@
+{
+  "name": "webgl_fun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^4.3.3",
+    "@angular/compiler": "^4.3.3",
+    "@angular/core": "^4.3.3",
+    "@angular/forms": "^4.3.3",
+    "@angular/http": "^4.3.3",
+    "@angular/platform-browser": "^4.3.3",
+    "@angular/platform-browser-dynamic": "^4.3.3",
+    "@angular/router": "^4.3.3",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "^2.0.3",
+    "@ngrx/store": "^2.2.2",
+    "bootstrap-sass": "^3.3.7",
+    "core-js": "^2.4.1",
+    "immutable": "^3.8.1",
+    "jquery": "^3.2.1",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.2",
+    "three": "^0.86.0",
+    "zone.js": "0.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.20",
+    "@types/three": "^0.84.19",
+    "awesome-typescript-loader": "^3.2.2",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.5.1",
+    "node-sass": "^4.5.3",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "to-string-loader": "^1.1.5",
+    "typescript": "^2.4.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.5.2",
+    "webpack-dev-server": "^2.7.1"
+  }
+}
