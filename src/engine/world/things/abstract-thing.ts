@@ -40,13 +40,18 @@ export abstract class Thing {
   }
 
   protected updateMovement(seconds: number) {
-    let velocityDelta = this.acceleration.multiplyScalar(seconds);
-    let newVelocity = this.velocity.add(velocityDelta);
+    let newVelocity = new three.Vector2().copy(this.acceleration)
+      .multiplyScalar(seconds)
+      .add(this.velocity);
 
     // v0 * dt + 1/2 * a * dt^2
-    let locationDeltaVelocity = this.velocity.multiplyScalar(seconds);
-    let locationDeltaAcceleration = this.acceleration.multiplyScalar(0.5 * seconds * seconds);
-    let newLocation = this.location.add(locationDeltaVelocity).add(locationDeltaAcceleration);
+    let locationDeltaVelocity = new three.Vector2().copy(this.velocity)
+      .multiplyScalar(seconds);
+    let locationDeltaAcceleration = new three.Vector2().copy(this.acceleration)
+      .multiplyScalar(0.5 * seconds * seconds);
+    let newLocation = new three.Vector2().copy(this.location)
+      .add(locationDeltaVelocity)
+      .add(locationDeltaAcceleration);
 
     [this.location, this.velocity] = [newLocation, newVelocity]
     this.locationUpdated$.next(new three.Vector3(this.location.x, this.location.y));

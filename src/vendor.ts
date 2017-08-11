@@ -17,3 +17,4 @@ import 'jquery';
 import 'bootstrap-sass';
 require('style-loader!./vendor-styles.scss');
 import 'three';
+import 'moment';

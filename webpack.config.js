@@ -9,6 +9,14 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var ENV = process.env.ENV;
+var isDeploy = ENV === 'deploy';
+var isProd = (ENV === 'prod') || isDeploy;
+var isDev = (ENV === 'dev') || (!isProd);
+var envText = isDeploy ? 'deploy' : isProd ? 'prod' : 'dev'
+
+console.info('Resolved build environment: '  + envText);
+
 module.exports = () => {
   var config = {};
 
@@ -21,7 +29,7 @@ module.exports = () => {
   };
 
   config.output = {
-    path: root('dist'),
+    path: root('dist', envText),
     filename: '[name].bundle.js',
   };
 
@@ -47,7 +55,7 @@ module.exports = () => {
 
   config.plugins = [
     new CommonsChunkPlugin({
-      name: ['vendor', 'polyfill'],
+      name: ['main', 'vendor', 'polyfill'],
     }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
@@ -61,11 +69,11 @@ module.exports = () => {
         ]
       }
     }),
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     ENV: JSON.stringify(envText),
-    //   }
-    // }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        ENV: JSON.stringify(envText),
+      }
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: root('src', 'index.html'),
@@ -73,11 +81,11 @@ module.exports = () => {
     }),
   ];
 
-  // if (isProd) {
-  //   config.plugins.push(
-  //     new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: { keep_fnames: true }})
-  //   );
-  // }
+  if (isProd) {
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: { keep_fnames: true }})
+    );
+  }
 
   config.devServer = {
     contentBase: root('src'),
