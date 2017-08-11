@@ -3,7 +3,7 @@
     <h1> Three.js Experiment </h1>
   </div>
   <div *ngIf="hasWebGLSupport; else noSupport" class="canvas-container">
-    <cube-canvas width=800 height=600> </cube-canvas>
+    <game-canvas #gameCanvas width=800 height=600> </game-canvas>
   </div>
   <ng-template #noSupport>
     <p class="webgl-warning">
