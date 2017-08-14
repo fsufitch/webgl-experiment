@@ -1,8 +1,8 @@
 import * as three from 'three';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 
 import { WebGLSupportService } from '../common';
-import { GameCanvasService, SampleCube, OrbitCube } from '../engine';
+import { GameCanvasService, SampleCube, OrbitCube, PlayerService } from '../engine';
 
 @Component({
   selector: 'ng2app',
@@ -12,9 +12,13 @@ import { GameCanvasService, SampleCube, OrbitCube } from '../engine';
   ],
 })
 export class AppComponent implements OnInit {
+  prodMode = ['prod', 'deploy'].indexOf(process.env.ENV) > -1;
+  @ViewChild('canvasContainer') canvasContainer: ElementRef;
+
   constructor(
     private webGLSupportService: WebGLSupportService,
     private gameCanvasService: GameCanvasService,
+    private playerService: PlayerService,
   ) {}
 
   private webGLSupportCategories = this.webGLSupportService.getWebGLRenderingContextSupport();
@@ -34,5 +38,6 @@ export class AppComponent implements OnInit {
     ));
 
     this.gameCanvasService.runAnimationLoop();
+    this.playerService.listen();
   }
 }

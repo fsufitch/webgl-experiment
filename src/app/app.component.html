@@ -2,8 +2,8 @@
   <div class="header">
     <h1> Three.js Experiment </h1>
   </div>
-  <div *ngIf="hasWebGLSupport; else noSupport" class="canvas-container">
-    <game-canvas #gameCanvas width=800 height=600> </game-canvas>
+  <div #canvasContainer *ngIf="hasWebGLSupport; else noSupport" class="canvas-container">
+    <game-canvas #gameCanvas aspectWidth=16 aspectHeight=9> </game-canvas>
   </div>
   <ng-template #noSupport>
     <p class="webgl-warning">
@@ -20,3 +20,4 @@
     </p>
   </ng-template>
 </div>
+<game-controls-debug *ngIf="!prodMode"></game-controls-debug>
